@@ -60,63 +60,62 @@ the color. I look for the color that the user is querying with spaces
 around it, and return all the countries that contain " blue ", for
 example.
 
- Question 6: For this question, I removed all unnecessary spaces from the
- full text of the HTML itself in order to make parsing using regexes
- easier. Because there are different electricity categories (consumption,
- production, etc.) it was a bit difficult to find a regex that worked for
- consumption. Then I parse out the electricity and the extension
- (trillion, billion, million) in order to have correct calculations.
- Parsing out population was less of an ordeal. I used another regex for that
- one and saved it to a String and converted it to a Double. I scaled
- everything down by 1000 when I was doing calcuations because a trillion
- is not a number that Java can hold in a double or an int. So scaling it
- was an easy way around that problem. After all of that parsing and
- converting, electricity consumption is divided by population. An
- arraylist containing country names and containing the calculations in
- order are used for reference and the arraylist containing the
- consumption per capita is sorted. Then the index of the highest 5, or
- whatever the user wants, countries are returned by looking through the
- reference arraylists.
+Question 6: For this question, I removed all unnecessary spaces from the
+full text of the HTML itself in order to make parsing using regexes
+easier. Because there are different electricity categories (consumption,
+production, etc.) it was a bit difficult to find a regex that worked for
+consumption. Then I parse out the electricity and the extension
+(trillion, billion, million) in order to have correct calculations.
+Parsing out population was less of an ordeal. I used another regex for that
+one and saved it to a String and converted it to a Double. I scaled
+everything down by 1000 when I was doing calcuations because a trillion
+is not a number that Java can hold in a double or an int. So scaling it
+was an easy way around that problem. After all of that parsing and
+converting, electricity consumption is divided by population. An
+arraylist containing country names and containing the calculations in
+order are used for reference and the arraylist containing the
+consumption per capita is sorted. Then the index of the highest 5, or
+whatever the user wants, countries are returned by looking through the
+reference arraylists.
 
- Question 7: For this one, I looked for the word "landlocked" first. Then
- if that was true, I looked at the border countries. The countries are
- separated by commas, so I counted the commas in the parsed section of
- HTML which I again got using a regex. If the number of commas equaled 1,
- then that meant that the country was landlocked within another country.
+Question 7: For this one, I looked for the word "landlocked" first. Then
+if that was true, I looked at the border countries. The countries are
+separated by commas, so I counted the commas in the parsed section of
+HTML which I again got using a regex. If the number of commas equaled 1,
+then that meant that the country was landlocked within another country.
 
- Question 8: For this question, I parsed out the name of the capital and
- its coordinates for each country. The latitude and longitude were
- converted 0 - 180 and 0 - 360 respectively. Then they were parsed into
- Doubles and passed in as parameters for a Capital object, which were
- added to a capitals arraylist of Capitals. Then I created a 2D array that
- is one greater dimensionally than the size of the capitals arraylist (I
- also removed a country because it does not have an official capital -
- Nauru). The array is .size() + 1 because the first row and columns hold
- the information for each capital. Then the capitals are added to the
- array's top row and leftmost column. After that, I implemented an
- algorithm that calculates the difference between latitude and longitude
- of the two capitals in each cell of the "grid". If it comes out less than
- 10 for both latitude and longitude, the cell of the grid is marked as
- "Yes". Else it is marked as "No." After this, the the number of Yeses per
- row is counted and stored in an arraylist. Then I extract the highest
- number of yeses from the arraylist, find the index of the highest number
- of yeses, add 1 since the 2D array had to account for capital names and
- was thus one index larger than the number of capitals. 
- With the row index of the largest number of Yeses figured out, I
- implemented a for loop to return the capital information that had a "Yes"
- checked in its place on the grid.
+Question 8: For this question, I parsed out the name of the capital and
+its coordinates for each country. The latitude and longitude were
+converted 0 - 180 and 0 - 360 respectively. Then they were parsed into
+Doubles and passed in as parameters for a Capital object, which were
+added to a capitals arraylist of Capitals. Then I created a 2D array that
+is one greater dimensionally than the size of the capitals arraylist (I
+also removed a country because it does not have an official capital -
+Nauru). The array is .size() + 1 because the first row and columns hold
+the information for each capital. Then the capitals are added to the
+array's top row and leftmost column. After that, I implemented an
+algorithm that calculates the difference between latitude and longitude
+of the two capitals in each cell of the "grid". If it comes out less than
+5 for both latitude and longitude (because it uses a capital is the center point), 
+the cell of the grid is marked as "Yes". Else it is marked
+as "No." After this, the the number of Yeses per
+row is counted and stored in an arraylist. Then I extract the highest
+number of yeses from the arraylist, find the index of the highest number
+of yeses, add 1 since the 2D array had to account for capital names and
+was thus one index larger than the number of capitals. 
+With the row index of the largest number of Yeses figured out, I
+implemented a for loop to return the capital information that had a "Yes"
+checked in its place on the grid.
 
- Note: I'm not sure why, but when I coded less than 10
- for difference in latitude and longitude, I was getting a 20 by 20 degree square. So I
- changed it to less than 5, and I got a 10 by 10 degree square. It's
- pretty bizarre and I'm honestly not sure why it would be doing that. 
+Note: This is not the most efficient algorithm as it only calculates maximum number
+of capitals using one capital as the center point.
 
- Question 9: This was one of my wildcard questions, which was find the
- countries that grant universal suffrage at a certain age that the user
- could input. I used a regex to parse out the suffrage information, and
- checked if it contained the query age. 
+Question 9: This was one of my wildcard questions, which was find the
+countries that grant universal suffrage at a certain age that the user
+could input. I used a regex to parse out the suffrage information, and
+checked if it contained the query age. 
 
- Question 10: Another wildcard; find the countries that have an
- unemployment rate below a certain percentage. I used a regex to parse out
- the unemployment information, parsed the number into a double, and then
- checked if it was less than the query percentage.
+Question 10: Another wildcard; find the countries that have an
+unemployment rate below a certain percentage. I used a regex to parse out 
+the unemployment information, parsed the number into a double, and then
+checked if it was less than the query percentage.
